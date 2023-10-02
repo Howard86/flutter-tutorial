@@ -18,9 +18,18 @@ class MealDetailsScreen extends ConsumerWidget {
         title: Text(meal.title),
         actions: [
           IconButton(
-            icon: ref.watch(favouriteMealsProvider).contains(meal)
-                ? const Icon(Icons.star)
-                : const Icon(Icons.star_border),
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) => ScaleTransition(
+                scale: Tween(begin: 1.1, end: 1.0)
+                    .chain(CurveTween(curve: Curves.easeInOut))
+                    .animate(animation),
+                child: child,
+              ),
+              child: ref.watch(favouriteMealsProvider).contains(meal)
+                  ? const Icon(Icons.star, key: ValueKey(true))
+                  : const Icon(Icons.star_border, key: ValueKey(false)),
+            ),
             onPressed: () {
               final isAdded = ref
                   .read(favouriteMealsProvider.notifier)
@@ -41,11 +50,14 @@ class MealDetailsScreen extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              meal.imageUrl,
-              height: 300,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            Hero(
+              tag: meal.id,
+              child: Image.network(
+                meal.imageUrl,
+                height: 300,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 14),
             Text(
