@@ -1,8 +1,8 @@
-import 'package:firstapp/data/dummy_data.dart';
-import 'package:firstapp/models/category.dart';
-import 'package:firstapp/models/meal.dart';
-import 'package:firstapp/screens/meals.dart';
-import 'package:firstapp/widgets/category_grid_item.dart';
+import 'package:firstapp/meal_app/data/dummy_data.dart';
+import 'package:firstapp/meal_app/models/category.dart';
+import 'package:firstapp/meal_app/models/meal.dart';
+import 'package:firstapp/meal_app/screens/meals.dart';
+import 'package:firstapp/meal_app/widgets/category_grid_item.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatelessWidget {

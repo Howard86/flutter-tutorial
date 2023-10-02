@@ -1,4 +1,4 @@
-import 'package:firstapp/models/category.dart';
+import 'package:firstapp/meal_app/models/category.dart';
 import 'package:flutter/material.dart';
 
 class CategoryGridItem extends StatelessWidget {
