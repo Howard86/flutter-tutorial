@@ -1,6 +1,7 @@
+import 'package:firstapp/shopping_app/constant.dart';
 import 'package:firstapp/shopping_app/data/categories.dart';
+import 'package:firstapp/shopping_app/data/grocery_item_repository.dart';
 import 'package:firstapp/shopping_app/models/category.dart';
-import 'package:firstapp/shopping_app/models/grocery_item.dart';
 import 'package:flutter/material.dart';
 
 class NewItem extends StatefulWidget {
@@ -18,21 +19,36 @@ class _NewItemState extends State<NewItem> {
   var _name = '';
   var _quantity = 1;
   var _category = categories[Categories.vegetables]!;
+  var _isLoading = false;
+  var _error = '';
 
-  void _saveItem() {
+  void _saveItem() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
     _formKey.currentState!.save();
-    Navigator.of(context).pop(
-      GroceryItem(
-        id: DateTime.now().toString(),
+    setState(() {
+      _isLoading = true;
+      _error = '';
+    });
+
+    try {
+      final item = await getIt<GroceryItemRepository>().addGroceryItem((
         name: _name,
         quantity: _quantity,
         category: _category,
-      ),
-    );
+      ));
+
+      if (!context.mounted) {
+        return;
+      }
+      Navigator.of(context).pop(item);
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+      });
+    }
   }
 
   void _resetItem() {
@@ -81,6 +97,7 @@ class _NewItemState extends State<NewItem> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: DropdownButtonFormField(
+                      value: _category,
                       items: [
                         for (final category in categories.entries)
                           DropdownMenuItem(
@@ -112,16 +129,29 @@ class _NewItemState extends State<NewItem> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: _resetItem,
+                    onPressed: _isLoading ? null : _resetItem,
                     child: const Text('Reset'),
                   ),
                   const SizedBox(height: 8),
                   ElevatedButton(
-                    onPressed: _saveItem,
-                    child: const Text('Add Item'),
+                    onPressed: _isLoading ? null : _saveItem,
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 16,
+                            width: 16,
+                            child: CircularProgressIndicator(),
+                          )
+                        : const Text('Add Item'),
                   )
                 ],
-              )
+              ),
+              if (_error.isNotEmpty)
+                Text(
+                  _error,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
             ],
           ),
         ),
