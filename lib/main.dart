@@ -1,14 +1,13 @@
-import 'package:firstapp/place_app/main.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firstapp/chat_app/main.dart';
+import 'chat_app/firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
-  await dotenv.load(fileName: '.env');
-
-  runApp(
-    const ProviderScope(
-      child: PlaceApp(),
-    ),
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  runApp(const ChatApp());
 }
