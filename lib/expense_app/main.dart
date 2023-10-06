@@ -61,7 +61,7 @@ class ExpenseApp extends StatelessWidget {
             ),
       ),
       themeMode: ThemeMode.dark,
-      home: Expenses(),
+      home: const Expenses(),
     );
   }
 }

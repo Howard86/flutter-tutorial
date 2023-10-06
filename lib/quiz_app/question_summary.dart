@@ -1,7 +1,6 @@
 import 'package:firstapp/quiz_app/summary_item.dart';
 import 'package:firstapp/quiz_app/results_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class QuestionSummary extends StatelessWidget {
   const QuestionSummary({

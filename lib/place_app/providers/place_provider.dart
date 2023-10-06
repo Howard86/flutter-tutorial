@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
 
 import 'package:sqflite/sqflite.dart' as sql;
-import 'package:sqflite/sqlite_api.dart' as sql_api;
 
 Future<sql.Database> _getDatabase() async {
   final dbPath = await sql.getDatabasesPath();

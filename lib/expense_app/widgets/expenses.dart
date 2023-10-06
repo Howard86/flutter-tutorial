@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:firstapp/expense_app/widgets/chart.dart';
 import 'package:firstapp/expense_app/widgets/expenses_list.dart';
@@ -7,7 +6,7 @@ import 'package:firstapp/expense_app/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
-  Expenses({
+  const Expenses({
     super.key,
   });
 
